@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='App1.0' Id='AC4FFAD7-4729-457C-84A1-78661E40D6C2' UpgradeCode='7663B515-F499-4005-9ED0-1BE2F80E291F'
+    Language='1033' Codepage='1252' Version='1.0.0' Manufacturer='wangfeng Ltd.'>
+
+    <Package Id='*' Keywords='Installer'
+      Description="wangfeng App1.0 Installer"
+      Comments='App1.0 is a registered trademark of wangfeng Ltd.' Manufacturer='wangfeng Ltd.'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+    <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="wangfeng's App1.0 Installation [1]" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <!--自定义目录名 Name-->
+        <Directory Id='wangfeng' Name='wangfeng'>
+          <Directory Id='INSTALLDIR' Name='App1.0'>
+
+            <Component Id='MainExecutable' Guid='989F1CB9-9D8F-486E-9F8D-65D4A7C5F26E'>
+              <File Id='AppEXE' Name='WpfStudy.exe' DiskId='1' Source='WpfStudy.exe' KeyPath='yes'>
+                <Shortcut Id="startmenuFoobar10" Directory="ProgramMenuDir" Name="App1.0" WorkingDirectory='INSTALLDIR' Icon="Foobar10.exe" IconIndex="0" Advertise="yes" />
+                <Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Name="App1.0" WorkingDirectory='INSTALLDIR' Icon="Foobar10.exe" IconIndex="0" Advertise="yes" />
+              </File>
+            </Component>
+
+            <Component Id='HelperLibrary' Guid='080CFD08-5003-4F60-89F4-77DC31F42B5F'>
+              <File Id='HelperDLL' Name='icon.ico' DiskId='1' Source='icon.ico' KeyPath='yes' />
+              <File Id='HelperDLL1' Name='StudyExtend.runtimeconfig.json' DiskId='1' Source='StudyExtend.runtimeconfig.json'  />
+              <File Id='HelperDLL2' Name='DataCore.pdb' DiskId='1' Source='DataCore.pdb'  />
+              <File Id='HelperDLL3' Name='StudyExtend.exe' DiskId='1' Source='StudyExtend.exe'  />
+              <File Id='HelperDLL4' Name='StudyExtend.pdb' DiskId='1' Source='StudyExtend.pdb'  />
+              <File Id='HelperDLL5' Name='wpfgfx_cor3.dll' DiskId='1' Source='wpfgfx_cor3.dll'  />
+              <File Id='HelperDLL6' Name='PenImc_cor3.dll' DiskId='1' Source='PenImc_cor3.dll'  />
+              <File Id='HelperDLL7' Name='PresentationNative_cor3.dll' DiskId='1' Source='PresentationNative_cor3.dll'  />
+              <File Id='HelperDLL8' Name='NLog.Config' DiskId='1' Source='NLog.Config'  />
+              <File Id='HelperDLL9' Name='clrcompression.dll' DiskId='1' Source='clrcompression.dll'  />
+              <File Id='HelperDLL10' Name='coreclr.dll' DiskId='1' Source='coreclr.dll'  />
+              <File Id='HelperDLL11' Name='clrjit.dll' DiskId='1' Source='clrjit.dll'  />
+              <File Id='HelperDLL12' Name='mscordaccore.dll' DiskId='1' Source='mscordaccore.dll'  />
+              <File Id='HelperDLL13' Name='vcruntime140_cor3.dll' DiskId='1' Source='vcruntime140_cor3.dll'  />
+              <File Id='HelperDLL14' Name='D3DCompiler_47_cor3.dll' DiskId='1' Source='D3DCompiler_47_cor3.dll'  />
+              <File Id='HelperDLL15' Name='sni.dll' DiskId='1' Source='sni.dll'  />
+            </Component>
+
+            <Component Id='Manual' Guid='BB82E662-869C-4C4B-BD8B-6DA55F73A5FA'>
+              <File Id='Manual' Name='WpfStudy.pdb' DiskId='1' Source='WpfStudy.pdb' KeyPath='yes'>
+                <Shortcut Id="startmenuManual" Directory="ProgramMenuDir" Name="Instruction Manual" Advertise="yes" />
+              </File>
+            </Component>
+
+          </Directory>
+        </Directory>
+      </Directory>
+      <!--开始菜单的快捷方式-->
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="App1.0">
+          <Component Id="ProgramMenuDir" Guid="41857A1E-7AC0-440C-B352-5289EEFDDE6D">
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <Feature Id='Complete' Title='App1.0' Description='The complete package.'
+      Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+      <Feature Id='MainProgram' Title='Program' Description='The main executable.' Level='1'>
+        <ComponentRef Id='MainExecutable' />
+        <ComponentRef Id='HelperLibrary' />
+        <ComponentRef Id='ProgramMenuDir' />
+      </Feature>
+
+      <Feature Id='Documentation' Title='Description' Description='The instruction manual.' Level='1000'>
+        <ComponentRef Id='Manual' />
+      </Feature>
+    </Feature>
+
+    <UIRef Id="WixUI_Mondo" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+
+    <Icon Id="Foobar10.exe" SourceFile="WpfStudy.exe" />
+    <WixVariable Id="WixUIBannerBmp" Value="./WixUIBannerBmp.bmp"/>
+  </Product>
+</Wix>

@@ -1,0 +1,10 @@
+﻿--  Wix
+1.candle.exe SampleWixUI.wxs  生成obj文件
+2.light.exe SampleWixUI.wixobj  / light.exe -ext WixUIExtension SampleWixUI.wixobj （默认界面） / light.exe -ext WixUIExtension -ext WixUtilExtension -cultures:zh-CN SampleWixUI.wixobj (中文)  生成msi文件
+
+
+添加新的对话框，
+candle.exe SampleWixUIAddDlg.wxs UserRegistrationDlg.wxs
+light.exe -ext WixUIExtension -out SampleWixUIAddDlg.msi SampleWixUIAddDlg.wixobj UserRegistrationDlg.wixobj
+
+
